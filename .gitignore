@@ -1,3 +1,7 @@
 *.iso
 isodir
 sysroot
+.cache
+bochs*
+compile_commands.json
+.vscode
