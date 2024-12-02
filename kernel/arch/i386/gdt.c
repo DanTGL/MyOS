@@ -32,12 +32,12 @@
 
 static uint64_t gdt_entries[3];
 
-struct GDTR {
+struct gdt_descriptor {
     uint16_t size;
     uint32_t address;
 } __attribute__((packed));
 
-extern void flush_gdt(struct GDTR);
+extern void flush_gdt(struct gdt_descriptor);
 
 int set_descriptor(size_t num, uint32_t base, uint32_t limit, uint16_t flag) {
 	if (num >= (sizeof(gdt_entries) / sizeof(*gdt_entries))) {
@@ -61,7 +61,7 @@ int set_descriptor(size_t num, uint32_t base, uint32_t limit, uint16_t flag) {
 }
 
 void init_gdt() {
-    struct GDTR gdtr;
+    struct gdt_descriptor gdtr;
 
 	set_descriptor(0, 0, 0, 0);
 	set_descriptor(1, 0x00000000, 0xFFFFFFFF, (SEG_PRIV(0) | CODE_EXRD | SEG_TYPE_CD | SEG_PRES | SEG_SIZE | SEG_GRAN));

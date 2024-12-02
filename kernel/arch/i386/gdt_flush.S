@@ -11,15 +11,13 @@ flush_gdt:
     mov %cr0, %eax
     or $1, %al
     mov %eax, %cr0
-    ret
     ljmp $0x8, $reload_cs
+
 reload_cs:
-    MOV $0x10, %eax
-    mov %eax,  %ds
-    mov %eax,  %cs
-    mov %eax,  %ss
-    mov %eax,  %es
-    mov %eax,  %fs
-    mov %eax,  %gs
-    sti
+    mov $0x10, %ax
+    mov %ax,  %ds
+    mov %ax,  %es
+    mov %ax,  %fs
+    mov %ax,  %gs
+    mov %ax,  %ss
     ret
