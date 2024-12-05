@@ -1,12 +1,12 @@
+#include <stdint.h>
 #include <stdio.h>
+#include <string.h>
 
 #include <kernel/tty.h>
-#include <kernel/gdt.h>
-#include <kernel/idt.h>
+#include <kernel/system.h>
 
 void kernel_main(void) {
-	init_gdt();
-	init_idt();
 	terminal_initialize();
+	system_setup();
 	printf("Hello, kernel World!\n");
 }

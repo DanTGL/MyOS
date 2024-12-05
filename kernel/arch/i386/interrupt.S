@@ -8,9 +8,6 @@ load_idt:
     mov %esp, %ebp
     lidt 0x8(%ebp)
     pop %ebp
-    mov %cr0, %eax
-    or $1, %al
-    mov %eax, %cr0
     ret
 
 .macro isr_err n
@@ -30,6 +27,7 @@ common_int_handler:
     pusha
     call exception_handler
     popa
+    add $8, %esp
     iret
 
 .section .text

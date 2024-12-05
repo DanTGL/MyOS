@@ -3,7 +3,6 @@
 .global flush_gdt
 .type flush_gdt, @function
 flush_gdt:
-    cli
     push %ebp
     mov %esp, %ebp
     lgdt 0x8(%ebp)

@@ -1,4 +1,4 @@
-#include <kernel/gdt.h>
+#include "gdt.h"
 #include <stdint.h>
 #include <string.h>
 
