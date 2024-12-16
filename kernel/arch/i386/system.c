@@ -1,4 +1,5 @@
 #include <kernel/system.h>
+#include "i8042.h"
 #include "idt.h"
 #include "gdt.h"
 #include "misc.h"
@@ -9,6 +10,7 @@ void system_setup() {
     init_gdt();
     init_idt();
     pic_remap(0x20, 0x28);
+    irq_install_handler(1, &keyboard);
     sti();
 }
 
