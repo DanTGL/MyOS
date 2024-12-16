@@ -2,11 +2,13 @@
 #include "idt.h"
 #include "gdt.h"
 #include "misc.h"
+#include "pic.h"
 
 void system_setup() {
     cli();
     init_gdt();
     init_idt();
+    pic_remap(0x20, 0x28);
     sti();
 }
 

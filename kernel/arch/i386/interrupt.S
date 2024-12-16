@@ -81,4 +81,42 @@ isr_stubs:
     .set i, i+1
 .endr
 
+.section .text
+.extern irq_handler
+
+.macro irq_stub n
+irq_\n:
+    push $0
+    push $\n
+    jmp common_irq_handler
+.endm
+
+common_irq_handler:
+    pushal
+    push %esp
+    call irq_handler
+    add $4, %esp
+    popal
+    add $8, %esp
+    iret
+
+.set i, 32
+.rept 16
+    irq_stub %i
+    .set i, i+1
+.endr
+
+.section .data
+.macro irq_ptr n
+    .long irq_\n
+.endm
+
+.global irq_stubs
+irq_stubs:
+.set i, 32
+.rept 16
+    irq_ptr %i
+    .set i, i+1
+.endr
+
 .noaltmacro
