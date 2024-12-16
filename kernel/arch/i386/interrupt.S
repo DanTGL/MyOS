@@ -12,21 +12,23 @@ load_idt:
 
 .macro isr_err n
 isr_\n:
-    push \n
+    push $\n
     jmp common_int_handler
 .endm
 
 .macro isr_no_err n
 isr_\n:
-    push 0
-    push \n
+    push $0
+    push $\n
     jmp common_int_handler
 .endm
 
 common_int_handler:
-    pusha
+    pushal
+    push %esp
     call exception_handler
-    popa
+    add $4, %esp
+    popal
     add $8, %esp
     iret
 

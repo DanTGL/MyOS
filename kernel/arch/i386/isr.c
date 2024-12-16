@@ -1,13 +1,6 @@
+#include "cpu.h"
 #include <stdint.h>
 #include <stdio.h>
-
-struct interrupt_frame
-{
-    unsigned int error_code;
-    unsigned int eip;
-    unsigned int cs;
-    unsigned int eflags;
-};
 
 static const char* exception_strings[32] = {
     "Division Error",
@@ -44,8 +37,8 @@ static const char* exception_strings[32] = {
     "Reserved",
 };
 
-void exception_handler(struct interrupt_frame* frame, unsigned int interrupt) {
-    if (interrupt < 32) {
-        printf("%s", exception_strings[interrupt]);
+void exception_handler(struct interrupt_frame* frame) {
+    if (frame->interrupt < 32) { 
+        printf("%s", exception_strings[frame->interrupt]);
     }
 }
