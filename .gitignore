@@ -6,3 +6,4 @@ bochs*
 compile_commands.json
 .vscode
 bx_enh_dbg.ini
+limine/
