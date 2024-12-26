@@ -5,7 +5,10 @@
 #include <stdbool.h>
 
 #include <kernel/system.h>
+#include <kernel/tty.h>
 #include <limine.h>
+#include <flanterm/flanterm.h>
+#include <flanterm/backends/fb.h>
 
 // Set the base revision to 3, this is recommended as this is the latest
 // base revision described by the Limine boot protocol specification.
@@ -53,13 +56,22 @@ void kmain(void) {
     }
 
     // Fetch the first framebuffer.
-    struct limine_framebuffer *framebuffer = framebuffer_request.response->framebuffers[0];
+    struct limine_framebuffer *fb = framebuffer_request.response->framebuffers[0];
 
-    // Note: we assume the framebuffer model is RGB with 32-bit pixels.
-    for (size_t i = 0; i < 100; i++) {
-        volatile uint32_t *fb_ptr = framebuffer->address;
-        fb_ptr[i * (framebuffer->pitch / 4) + i] = 0xffffff;
-    }
+    struct flanterm_context* ft_ctx = flanterm_fb_init(
+        NULL, NULL,
+        fb->address, fb->width, fb->height, fb->pitch,
+        fb->red_mask_size, fb->red_mask_shift,
+        fb->green_mask_size, fb->green_mask_shift,
+        fb->blue_mask_size, fb->blue_mask_shift,
+        NULL,
+        NULL, NULL,
+        NULL, NULL,
+        NULL, NULL,
+        NULL, 0, 0, 1,
+        0, 0,
+        0
+    );
 
-	hcf();
+    terminal_initialize(ft_ctx);
 }
