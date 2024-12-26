@@ -73,5 +73,7 @@ void kmain(void) {
         0
     );
 
+    system_setup();
+
     terminal_initialize(ft_ctx);
 }
