@@ -76,4 +76,6 @@ void kmain(void) {
     system_setup();
 
     terminal_initialize(ft_ctx);
+
+    hcf();
 }
