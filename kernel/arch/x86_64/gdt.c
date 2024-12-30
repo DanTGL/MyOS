@@ -69,7 +69,7 @@ void init_gdt() {
 
 	set_descriptor(0, 0, 0, 0);
 	set_descriptor(1, 0x00000000, 0xFFFFFFFF, (SEG_PRIV(0) | CODE_EXRD | SEG_TYPE_CD | SEG_PRES | SEG_GRAN | SEG_LONG));
-	set_descriptor(2, 0x00000000, 0xFFFFFFFF, (SEG_PRIV(0) | DATA_RDWR | SEG_TYPE_CD | SEG_PRES | SEG_GRAN | SEG_LONG));
+	set_descriptor(2, 0x00000000, 0xFFFFFFFF, (SEG_PRIV(0) | DATA_RDWR | SEG_TYPE_CD | SEG_PRES | SEG_GRAN | SEG_SIZE));
 
     gdtr.address = (uint64_t)gdt_entries;
     gdtr.size = sizeof(gdt_entries);

@@ -37,12 +37,6 @@ static volatile LIMINE_REQUESTS_START_MARKER;
 __attribute__((used, section(".limine_requests_end")))
 static volatile LIMINE_REQUESTS_END_MARKER;
 
-static void hcf(void) {
-	for (;;) {
-		asm volatile ("hlt" ::: "memory");
-	}
-}
-
 void kmain(void) {
 	    // Ensure the bootloader actually understands our base revision (see spec).
     if (LIMINE_BASE_REVISION_SUPPORTED == false) {

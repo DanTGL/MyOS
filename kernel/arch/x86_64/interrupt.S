@@ -1,5 +1,5 @@
 .section .text
-.extern exception_handler
+.extern interrupt_handler
 
 .macro isr_err n
 isr_\n:
@@ -32,8 +32,7 @@ common_int_handler:
     pushq %r14
     pushq %r15
     mov %rsp, %rdi
-    call exception_handler
-    mov %rax, %rsp
+    call interrupt_handler
     popq %r15
     popq %r14
     popq %r13
@@ -51,7 +50,7 @@ common_int_handler:
     popq %rbx
     popq %rax
     add $16, %rsp
-    iret
+    iretq
 
 .section .text
 isr_no_err 0
@@ -88,6 +87,12 @@ isr_err    30
 isr_no_err 31
 
 .altmacro
+.set i, 32
+.rept 256-i
+isr_no_err %i
+.set i, i+1
+.endr
+
 
 .macro isr_ptr n
     .quad isr_\n
@@ -97,7 +102,9 @@ isr_no_err 31
 .global isr_stubs
 isr_stubs:
 .set i, 0
-.rept 32
+.rept 256
     isr_ptr %i
     .set i, i+1
 .endr
+
+.noaltmacro

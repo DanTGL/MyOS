@@ -7,4 +7,7 @@ int interrupt_alloc(void* interrupt_handler);
 int interrupt_reserve(int interrupt, void* interrupt_handler);
 void interrupt_free(int interrupt);
 
+/* Halts the cpu until reset (Halt and Catch Fire) */
+void hcf(void);
+
 #endif

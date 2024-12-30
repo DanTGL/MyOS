@@ -7,8 +7,5 @@
 #define GATE_TYPE_TRAP64    0x8F // 64-bit Trap Gate
 
 void init_idt();
-int alloc_idt_gate(uint64_t address, uint8_t type);
-int set_idt_gate(unsigned int num, uint64_t address, uint8_t type);
-void free_idt_gate(unsigned int num);
 
 #endif

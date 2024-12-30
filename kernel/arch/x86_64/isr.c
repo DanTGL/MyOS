@@ -1,4 +1,6 @@
-#include "cpu.h"
+#include "isr.h"
+#include "kernel/system.h"
+#include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
 
@@ -37,10 +39,43 @@ static const char* exception_strings[32] = {
     "Reserved",
 };
 
-struct interrupt_frame* exception_handler(struct interrupt_frame* frame) {
-    if (frame->interrupt < 32) { 
-        printf("%s", exception_strings[frame->interrupt]);
+static handlerfunc_t handlers[256];
+
+void exception_handler(struct interrupt_frame* frame) {
+    printf("%s\n", exception_strings[frame->interrupt]);
+
+    hcf();
+}
+
+void interrupt_handler(struct interrupt_frame* frame) {
+    if (frame->interrupt < 256 && handlers[frame->interrupt] != NULL) {
+        (*handlers[frame->interrupt])(frame);
+    }
+}
+
+int install_interrupt_handler(uint8_t num, handlerfunc_t handler) {
+    if (handlers[num] != NULL || handler == NULL) return -1;
+
+    handlers[num] = handler;
+
+    return 0;
+}
+
+int uninstall_interrupt_handler(uint8_t num) {
+    // Check if the interrupt handler is already free
+    if (handlers[num] == NULL) return -1;
+
+    handlers[num] = NULL;
+
+    return 0;
+}
+
+
+void init_interrupts() {
+    for (int i = 0; i < 32; i++) {
+        if (install_interrupt_handler(i, exception_handler) != 0) {
+            hcf();
+        }
     }
 
-    return frame;
 }

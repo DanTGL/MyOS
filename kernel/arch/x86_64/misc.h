@@ -9,4 +9,8 @@ static inline void sti() {
     asm volatile ("sti" : : : "memory");
 }
 
+static inline void hlt() {
+    asm volatile ("hlt" : : : "memory");
+}
+
 #endif
