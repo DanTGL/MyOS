@@ -1,5 +1,6 @@
 #include "isr.h"
 #include "kernel/system.h"
+#include "pic.h"
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -78,4 +79,5 @@ void init_interrupts() {
         }
     }
 
+    pic_remap(32);
 }

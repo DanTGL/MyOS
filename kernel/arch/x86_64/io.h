@@ -44,7 +44,7 @@ static inline void outq(uint16_t port, uint64_t value) {
 }
 
 static inline void io_wait(void) {
-    outb(0x80, 0);
+    outb(0x80, 0); // Writing to unused port acts like delay for i/o operations
 }
 
 #endif
