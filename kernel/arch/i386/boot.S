@@ -30,7 +30,7 @@ _start:
 	call _init
 
 	# Transfer control to the main kernel.
-	call kernel_main
+	call kmain
 
 	# Hang if kernel_main unexpectedly returns.
 	cli

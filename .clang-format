@@ -3,4 +3,6 @@ BasedOnStyle: LLVM
 IndentWidth: 4
 AlignAfterOpenBracket: BlockIndent
 QualifierAlignment: Leave
+BreakBeforeBraces: Linux
+IndentCaseLabels: false
 ...

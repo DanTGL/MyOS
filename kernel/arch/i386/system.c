@@ -1,11 +1,12 @@
-#include <kernel/system.h>
+#include "gdt.h"
 #include "i8042.h"
 #include "idt.h"
-#include "gdt.h"
 #include "misc.h"
 #include "pic.h"
+#include <kernel/system.h>
 
-void system_setup() {
+void system_setup()
+{
     cli();
     init_gdt();
     init_idt();
@@ -14,14 +15,23 @@ void system_setup() {
     sti();
 }
 
-int interrupt_alloc(void* interrupt_handler) {
+int interrupt_alloc(void *interrupt_handler)
+{
     return alloc_idt_gate((uint32_t)&interrupt_handler, GATE_TYPE_INT32);
 }
 
-int interrupt_set(int interrupt, void *interrupt_handler) {
-    return set_idt_gate(interrupt, (uint32_t)&interrupt_handler, GATE_TYPE_INT32);
+int interrupt_set(int interrupt, void *interrupt_handler)
+{
+    return set_idt_gate(
+        interrupt, (uint32_t)&interrupt_handler, GATE_TYPE_INT32
+    );
 }
 
-void interrupt_free(int interrupt) {
-    free_idt_gate(interrupt);
+void interrupt_free(int interrupt) { free_idt_gate(interrupt); }
+
+__attribute__((noreturn)) void hcf(void)
+{
+    for (;;) {
+        hlt();
+    }
 }

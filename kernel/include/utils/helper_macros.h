@@ -1,0 +1,6 @@
+#ifndef MYOS_UTILS_HELPER_MACROS_H
+#define MYOS_UTILS_HELPER_MACROS_H
+
+#define UNUSED(x) ((void)(x))
+
+#endif // !MYOS_UTILS_HELPER_MACROS_H
