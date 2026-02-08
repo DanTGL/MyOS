@@ -15,7 +15,7 @@ cp sysroot/boot/myos.kernel isodir/boot/myos.kernel
 #grub-mkrescue -o myos.iso isodir
 
 if [ ! -f limine/limine ]; then
-	git clone https://github.com/limine-bootloader/limine.git --branch=v8.x-binary --depth=1
+	git clone https://github.com/limine-bootloader/limine.git --branch=v10.x-binary --depth=1
   	make -C limine
 fi
 
