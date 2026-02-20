@@ -30,7 +30,7 @@
 #define CODE_EXRDC  0xE // Execute/Read, conforming
 #define CODE_EXRDCA 0xF // Execute/Read, conforming, accessed
 
-static uint64_t gdt_entries[3];
+static uint64_t gdt_entries[5];
 
 struct gdt_descriptor {
     uint16_t size;
@@ -78,6 +78,14 @@ void init_gdt()
     set_descriptor(
         2, 0x00000000, 0xFFFFFFFF,
         (SEG_PRIV(0) | DATA_RDWR | SEG_TYPE_CD | SEG_PRES | SEG_GRAN | SEG_LONG)
+    );
+    set_descriptor(
+        3, 0x00000000, 0xFFFFFFFF,
+        (SEG_PRIV(3) | CODE_EXRD | SEG_TYPE_CD | SEG_PRES | SEG_GRAN | SEG_LONG)
+    );
+    set_descriptor(
+        4, 0x00000000, 0xFFFFFFFF,
+        (SEG_PRIV(3) | DATA_RDWR | SEG_TYPE_CD | SEG_PRES | SEG_GRAN | SEG_LONG)
     );
 
     gdtr.address = (uint64_t)gdt_entries;
