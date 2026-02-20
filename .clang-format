@@ -3,6 +3,13 @@ BasedOnStyle: LLVM
 IndentWidth: 4
 AlignAfterOpenBracket: BlockIndent
 QualifierAlignment: Leave
+AllowShortFunctionsOnASingleLine: Inline
 BreakBeforeBraces: Linux
+AlignConsecutiveMacros:
+  Enabled: true
+AlignConsecutiveAssignments:
+  Enabled: true
+AlignConsecutiveBitFields:
+  Enabled: true
 IndentCaseLabels: false
 ...

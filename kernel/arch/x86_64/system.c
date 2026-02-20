@@ -7,7 +7,8 @@
 #include "misc.h"
 #include "pic.h"
 
-void system_setup() {
+void system_setup()
+{
     cli();
     init_gdt();
     init_idt();
@@ -17,7 +18,8 @@ void system_setup() {
     sti();
 }
 
-__attribute__((noreturn)) void hcf(void) {
+__attribute__((noreturn)) void hcf(void)
+{
     for (;;) {
         hlt();
     }

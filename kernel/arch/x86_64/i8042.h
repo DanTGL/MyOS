@@ -3,6 +3,6 @@
 
 #include "cpu.h"
 
-void keyboard(struct interrupt_frame *frame);
+void keyboard(cpu_context_t *context);
 
 #endif

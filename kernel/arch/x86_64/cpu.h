@@ -3,8 +3,7 @@
 
 #include <stdint.h>
 
-struct interrupt_frame
-{
+typedef struct {
     uint64_t r15;
     uint64_t r14;
     uint64_t r13;
@@ -28,6 +27,6 @@ struct interrupt_frame
     uint64_t int_rflags;
     uint64_t int_rsp;
     uint64_t int_ss;
-};
+} cpu_context_t;
 
 #endif

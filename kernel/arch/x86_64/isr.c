@@ -1,11 +1,12 @@
 #include "isr.h"
+#include "cpu.h"
 #include "kernel/system.h"
 #include "pic.h"
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
 
-static const char* exception_strings[32] = {
+static const char *exception_strings[32] = {
     "Division Error",
     "Debug",
     "Non-maskable Interrupt",
@@ -42,37 +43,43 @@ static const char* exception_strings[32] = {
 
 static handlerfunc_t handlers[256];
 
-void exception_handler(struct interrupt_frame* frame) {
-    printf("%s\n", exception_strings[frame->interrupt]);
+void exception_handler(cpu_context_t *context)
+{
+    printf("%s\n", exception_strings[context->interrupt]);
 
     hcf();
 }
 
-void interrupt_handler(struct interrupt_frame* frame) {
-    if (frame->interrupt < 256 && handlers[frame->interrupt] != NULL) {
-        (*handlers[frame->interrupt])(frame);
+void interrupt_handler(cpu_context_t *context)
+{
+    if (context->interrupt < 256 && handlers[context->interrupt] != NULL) {
+        (*handlers[context->interrupt])(context);
     }
 }
 
-int install_interrupt_handler(uint8_t num, handlerfunc_t handler) {
-    if (handlers[num] != NULL || handler == NULL) return -1;
+int install_interrupt_handler(uint8_t num, handlerfunc_t handler)
+{
+    if (handlers[num] != NULL || handler == NULL)
+        return -1;
 
     handlers[num] = handler;
 
     return 0;
 }
 
-int uninstall_interrupt_handler(uint8_t num) {
+int uninstall_interrupt_handler(uint8_t num)
+{
     // Check if the interrupt handler is already free
-    if (handlers[num] == NULL) return -1;
+    if (handlers[num] == NULL)
+        return -1;
 
     handlers[num] = NULL;
 
     return 0;
 }
 
-
-void init_interrupts() {
+void init_interrupts()
+{
     for (int i = 0; i < 32; i++) {
         if (install_interrupt_handler(i, exception_handler) != 0) {
             hcf();

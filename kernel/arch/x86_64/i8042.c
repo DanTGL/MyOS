@@ -1,5 +1,7 @@
 #include "i8042.h"
+#include "cpu.h"
 #include "io.h"
+#include "utils/helper_macros.h"
 #include <stdint.h>
 #include <stdio.h>
 
@@ -41,7 +43,10 @@ unsigned char kbdus[128] = {
     0, /* All other keys are undefined */
 };
 
-void keyboard(struct interrupt_frame *frame) {
+void keyboard(cpu_context_t *context)
+{
+    UNUSED(context);
+
     uint8_t scancode = inb(0x60);
     // Interrupt is triggered on both press and release,
     // so just ignore it when released for now. (Will revisit when I've
@@ -51,6 +56,7 @@ void keyboard(struct interrupt_frame *frame) {
     }
 
     scancode = scancode | scancode;
+
     uint8_t key = kbdus[scancode];
 
     if (key != 0)

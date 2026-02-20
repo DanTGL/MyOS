@@ -4,7 +4,7 @@
 #include "cpu.h"
 #include <stdint.h>
 
-typedef void (*handlerfunc_t)(struct interrupt_frame*);
+typedef void (*handlerfunc_t)(cpu_context_t *);
 
 void init_interrupts();
 int install_interrupt_handler(uint8_t num, handlerfunc_t handler);
