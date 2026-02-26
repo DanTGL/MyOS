@@ -1,6 +1,8 @@
 #ifndef KERNEL_ARCH_X86_64_CPU_H_
 #define KERNEL_ARCH_X86_64_CPU_H_
 
+#include <stdbool.h>
+#include <stddef.h>
 #include <stdint.h>
 
 typedef struct cpu_context_t {
@@ -27,4 +29,22 @@ typedef struct cpu_context_t {
     uint64_t int_rsp;
     uint64_t int_ss;
 } cpu_context_t;
+
+typedef void (*funcptr_t)(void);
+
+typedef struct task_params {
+    uintptr_t entry;
+    bool userspace;
+    uintptr_t stack_ptr;
+    size_t stack_size;
+} task_params_t;
+
+typedef struct task_t {
+    size_t task_id;
+    cpu_context_t context;
+} task_t;
+
+int task_create(const task_params_t *params, task_t *out);
+void task_switch(cpu_context_t *cur_context, const task_t *task);
+
 #endif // !KERNEL_ARCH_X86_64_CPU_H_

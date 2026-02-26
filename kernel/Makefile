@@ -30,6 +30,7 @@ LIBS:=$(LIBS) $(KERNEL_ARCH_LIBS)
 KERNEL_OBJS=\
 $(KERNEL_ARCH_OBJS) \
 kernel/kernel.o \
+kernel/scheduler.o \
 thirdparty/flanterm/flanterm.o \
 thirdparty/flanterm/backends/fb.o \
 

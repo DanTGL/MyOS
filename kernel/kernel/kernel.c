@@ -52,7 +52,6 @@ void kmain(void)
     // Fetch the first framebuffer.
     struct limine_framebuffer *fb =
         framebuffer_request.response->framebuffers[0];
-    system_setup();
 
     struct flanterm_context *ft_ctx = flanterm_fb_init(
         NULL, NULL,                                    //
@@ -71,6 +70,8 @@ void kmain(void)
     );
 
     terminal_initialize(ft_ctx);
+
+    system_setup();
 
     hcf();
 }
