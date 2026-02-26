@@ -1,5 +1,4 @@
 #include "i8042.h"
-#include "cpu.h"
 #include "io.h"
 #include "utils/helper_macros.h"
 #include <stdint.h>

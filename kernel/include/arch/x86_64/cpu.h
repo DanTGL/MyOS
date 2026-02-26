@@ -1,9 +1,9 @@
-#ifndef ARCH_X86_64_CPU_H
-#define ARCH_X86_64_CPU_H
+#ifndef KERNEL_ARCH_X86_64_CPU_H_
+#define KERNEL_ARCH_X86_64_CPU_H_
 
 #include <stdint.h>
 
-typedef struct {
+typedef struct cpu_context_t {
     uint64_t r15;
     uint64_t r14;
     uint64_t r13;
@@ -13,7 +13,6 @@ typedef struct {
     uint64_t r9;
     uint64_t r8;
     uint64_t rbp;
-    uint64_t rsp;
     uint64_t rdi;
     uint64_t rsi;
     uint64_t rdx;
@@ -28,5 +27,4 @@ typedef struct {
     uint64_t int_rsp;
     uint64_t int_ss;
 } cpu_context_t;
-
-#endif
+#endif // !KERNEL_ARCH_X86_64_CPU_H_

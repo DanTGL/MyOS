@@ -1,6 +1,6 @@
 #include "pic.h"
-#include "cpu.h"
 #include "io.h"
+#include <arch/cpu.h>
 #include <stddef.h>
 #include <stdint.h>
 

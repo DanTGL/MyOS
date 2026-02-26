@@ -21,7 +21,6 @@ common_int_handler:
     pushq %rdx
     pushq %rsi
     pushq %rdi
-    pushq %rsp
     pushq %rbp
     pushq %r8
     pushq %r9
@@ -42,7 +41,6 @@ common_int_handler:
     popq %r9
     popq %r8
     popq %rbp
-    popq %rsp
     popq %rdi
     popq %rsi
     popq %rdx

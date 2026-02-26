@@ -1,7 +1,7 @@
 #ifndef X86_64_ISR_H
 #define X86_64_ISR_H
 
-#include "cpu.h"
+#include <arch/cpu.h>
 #include <stdint.h>
 
 typedef void (*handlerfunc_t)(cpu_context_t *);

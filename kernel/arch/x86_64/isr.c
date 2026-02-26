@@ -1,5 +1,4 @@
 #include "isr.h"
-#include "cpu.h"
 #include "kernel/system.h"
 #include "pic.h"
 #include <stddef.h>
@@ -45,7 +44,10 @@ static handlerfunc_t handlers[256];
 
 void exception_handler(cpu_context_t *context)
 {
-    printf("%s\n", exception_strings[context->interrupt]);
+    printf(
+        "%s: %c\n", exception_strings[context->interrupt],
+        '0' + context->error_code
+    );
 
     hcf();
 }
