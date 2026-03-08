@@ -24,9 +24,5 @@ int task_create(const task_params_t *params, task_t *out)
 // NOTE: Has to be called from interrupt handler
 void task_switch(cpu_context_t *context, const task_t *task)
 {
-    context->int_rsp    = task->context.int_rsp;
-    context->int_cs     = task->context.int_cs;
-    context->int_ss     = task->context.int_ss;
-    context->int_rip    = task->context.int_rip;
-    context->int_rflags = task->context.int_rflags;
+    *context = task->context;
 }
