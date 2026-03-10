@@ -6,7 +6,7 @@ static inline void disable_interrupts();
 
 // IWYU pragma : begin_exports
 #ifdef __x86_64__
-#include "x86_64/cpu_x86_64.h"
+#include "x86_64/cpu.h"
 #else
 #error "Unsupported architecture"
 #endif
