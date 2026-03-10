@@ -55,6 +55,8 @@ static inline void enable_interrupts()
     asm volatile("sti" ::: "memory");
 }
 
+#define __arch_spin_wait() asm volatile("pause" ::: "memory")
+
 int task_create(const task_params_t *params, task_t *out);
 void task_switch(cpu_context_t *cur_context, const task_t *task);
 

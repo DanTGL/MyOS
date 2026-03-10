@@ -32,6 +32,7 @@ $(KERNEL_ARCH_OBJS) \
 kernel/kernel.o \
 kernel/scheduler.o \
 kernel/system.o \
+utils/spinlock.o \
 thirdparty/flanterm/flanterm.o \
 thirdparty/flanterm/backends/fb.o \
 

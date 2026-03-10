@@ -12,6 +12,9 @@ static inline void disable_interrupts();
 #endif
 // IWYU pragma : end_exports
 
+#ifndef __arch_spin_wait
+#define __arch_spin_wait() ({asm volatile("nop" : : : "memory")})
+#endif
 
 int arch_init();
 
