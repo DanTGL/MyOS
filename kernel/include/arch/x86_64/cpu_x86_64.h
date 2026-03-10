@@ -1,3 +1,5 @@
+// IWYU pragma: private; include <arch/cpu.h>
+
 #ifndef KERNEL_ARCH_X86_64_CPU_H_
 #define KERNEL_ARCH_X86_64_CPU_H_
 
@@ -43,6 +45,15 @@ typedef struct task_t {
     size_t task_id;
     cpu_context_t context;
 } task_t;
+static inline void disable_interrupts()
+{
+    asm volatile("cli" ::: "memory");
+}
+
+static inline void enable_interrupts()
+{
+    asm volatile("sti" ::: "memory");
+}
 
 int task_create(const task_params_t *params, task_t *out);
 void task_switch(cpu_context_t *cur_context, const task_t *task);

@@ -1,5 +1,23 @@
 #include "gdt.h"
+#include "i8042.h"
+#include "idt.h"
+#include "isr.h"
+#include "misc.h"
+#include "pic.h"
+#include "pit.h"
 #include <arch/cpu.h>
+
+int arch_init()
+{
+    init_gdt();
+    init_idt();
+    init_interrupts();
+
+    irq_install_handler(0, timer_handler);
+    irq_install_handler(1, keyboard);
+
+    return 0;
+}
 
 int task_create(const task_params_t *params, task_t *out)
 {
@@ -25,4 +43,11 @@ int task_create(const task_params_t *params, task_t *out)
 void task_switch(cpu_context_t *context, const task_t *task)
 {
     *context = task->context;
+}
+
+__attribute__((__noreturn__)) void hcf()
+{
+    for (;;) {
+        hlt();
+    }
 }

@@ -1,3 +1,4 @@
+#include <arch/cpu.h>
 #include <flanterm/backends/fb.h>
 #include <flanterm/flanterm.h>
 #include <kernel/system.h>

@@ -1,0 +1,5 @@
+
+Completion:
+  ArgumentLists: FullPlaceholders
+  HeaderInsertion: IWYU
+  CodePatterns: All
