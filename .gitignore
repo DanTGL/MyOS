@@ -1,4 +1,5 @@
 *.iso
+*.fd
 isodir
 sysroot
 .cache

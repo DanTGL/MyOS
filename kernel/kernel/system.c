@@ -1,8 +1,11 @@
 #include <arch/cpu.h>
 #include <kernel/scheduler.h>
 #include <kernel/system.h>
+#include <stdbool.h>
+#include <stddef.h>
 #include <stdio.h>
 
+#ifdef WITH_MULTITASKING
 // WIP: Temporary test code
 __attribute__((aligned(4096))) char task_stack[4096] = {0};
 
@@ -30,15 +33,17 @@ void create_test_task()
     task_create(&params, &task);
     scheduler_task_add(&task);
 }
+#endif
 
 void system_setup()
 {
     disable_interrupts();
 
     arch_init();
-
+#ifdef WITH_MULTITASKING
     scheduler_init();
     create_test_task();
+#endif
 
     enable_interrupts();
 }

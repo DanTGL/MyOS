@@ -16,7 +16,7 @@ cp sysroot/boot/myos.kernel isodir/boot/myos.kernel
 
 if [ ! -f limine/limine ]; then
 	git clone https://github.com/limine-bootloader/limine.git --branch=v10.x-binary --depth=1
-  	make -C limine
+	make -C limine
 fi
 
 mkdir -p isodir/boot
@@ -26,10 +26,20 @@ cp -v limine.conf limine/limine-bios.sys limine/limine-bios-cd.bin limine/limine
 mkdir -p isodir/EFI/BOOT
 cp -v limine/BOOTX64.EFI isodir/EFI/BOOT/
 cp -v limine/BOOTIA32.EFI isodir/EFI/BOOT/
+cp -v limine/BOOTRISCV64.EFI isodir/EFI/BOOT/
 
-# Create the bootable ISO.
-xorriso -as mkisofs -R -r -J -b boot/limine/limine-bios-cd.bin \
-        -no-emul-boot -boot-load-size 4 -boot-info-table -hfsplus \
-        -apm-block-size 2048 --efi-boot boot/limine/limine-uefi-cd.bin \
-        -efi-boot-part --efi-boot-image --protective-msdos-label \
-        isodir -o myos.iso
+if [[ "$(./target-triplet-to-arch.sh $HOST)" -eq "x86_64" ]]; then
+
+	# Create the bootable ISO.
+	xorriso -as mkisofs -R -r -J -b boot/limine/limine-bios-cd.bin \
+		-no-emul-boot -boot-load-size 4 -boot-info-table -hfsplus \
+		-apm-block-size 2048 --efi-boot boot/limine/limine-uefi-cd.bin \
+		-efi-boot-part --efi-boot-image --protective-msdos-label \
+		isodir -o myos.iso
+else
+	xorriso -as mkisofs -R -r -J -hfsplus \
+		-apm-block-size 2048 --efi-boot boot/limine/limine-uefi-cd.bin \
+		-efi-boot-part --efi-boot-image --protective-msdos-label \
+		isodir -o myos.iso
+
+fi

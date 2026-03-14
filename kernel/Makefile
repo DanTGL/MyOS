@@ -30,28 +30,24 @@ LIBS:=$(LIBS) $(KERNEL_ARCH_LIBS)
 KERNEL_OBJS=\
 $(KERNEL_ARCH_OBJS) \
 kernel/kernel.o \
-kernel/scheduler.o \
 kernel/system.o \
 kernel/tty.o \
 utils/spinlock.o \
 thirdparty/flanterm/flanterm.o \
 thirdparty/flanterm/backends/fb.o \
 
+ifeq ($(WITH_MULTITASKING),1)
+	KERNEL_OBJS += kernel/scheduler.o
+	CFLAGS += -DWITH_MULTITASKING
+endif
+
 OBJS=\
-$(ARCHDIR)/crti.o \
-$(ARCHDIR)/crtbegin.o \
 $(KERNEL_OBJS) \
-$(ARCHDIR)/crtend.o \
-$(ARCHDIR)/crtn.o \
 
 LINK_LIST=\
 $(LDFLAGS) \
-$(ARCHDIR)/crti.o \
-$(ARCHDIR)/crtbegin.o \
 $(KERNEL_OBJS) \
 $(LIBS) \
-$(ARCHDIR)/crtend.o \
-$(ARCHDIR)/crtn.o \
 
 .PHONY: all clean install install-headers install-kernel
 .SUFFIXES: .o .c .S
